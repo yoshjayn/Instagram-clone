@@ -133,7 +133,7 @@ const HomePage = () => {
         
         {/* Sidebar - hidden on mobile */}
         <div className="hidden md:block md:w-1/3">
-          <div className="fixed w-80">
+          <div className="fixed w-80 top-[60px] pt-4">
             {/* User profile */}
             <div className="flex items-center mb-6">
               <img 

@@ -16,8 +16,8 @@ const Navbar = () => {
               backgroundImage: 'url("https://static.cdninstagram.com/rsrc.php/v4/yB/r/E7m8ZCMOFDS.png")',
               backgroundPosition: '0px -52px',
               backgroundSize: 'auto',
-              width: '103px',
-              height: '29px',
+              width: '180px',
+              height: '53px',
               backgroundRepeat: 'no-repeat',
               display: 'inline-block'
             }}
@@ -53,7 +53,7 @@ const Navbar = () => {
           <Link to="/notifications" className="text-gray-800 hover:text-gray-600">
             <Heart size={24} />
           </Link>
-          <Link to="/profile" className="text-gray-800 hover:text-gray-600">
+          <Link to="/login" className="text-gray-800 hover:text-gray-600">
             <User size={24} />
           </Link>
         </div>
