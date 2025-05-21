@@ -48,12 +48,26 @@ const mockSuggestions = [
   }
 ];
 
+// Replace the direct localStorage.getItem with parsed version
+const getUserData = () => {
+  try {
+    const data = localStorage.getItem('userData');
+    return data ? JSON.parse(data) : {};
+  } catch (error) {
+    console.error('Error parsing user data:', error);
+    return {};
+  }
+};
+
+const userData = getUserData();
+
 const HomePage = () => {
   return (
+    
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
       
-      <div className="max-w-screen-lg mx-auto pt-16 pb-4 px-4 flex">
+      <div className="max-w-screen-lg mx-auto pb-4 px-4 flex">
         {/* Main feed */}
         <div className="w-full md:w-2/3 md:pr-8">
           {/* Stories (optional) */}
@@ -133,7 +147,7 @@ const HomePage = () => {
         
         {/* Sidebar - hidden on mobile */}
         <div className="hidden md:block md:w-1/3">
-          <div className="fixed w-80 top-[60px] pt-4">
+          <div className="fixed w-80 pt-4">
             {/* User profile */}
             <div className="flex items-center mb-6">
               <img 
@@ -142,8 +156,8 @@ const HomePage = () => {
                 className="w-14 h-14 rounded-full object-cover mr-4"
               />
               <div>
-                <p className="font-semibold text-sm">your_username</p>
-                <p className="text-gray-400 text-sm">Your Name</p>
+                <p className="font-semibold text-sm">{userData.name || "your_username"}</p>
+                <p className="text-gray-400 text-sm">{userData.email || "Your Name"}</p>
               </div>
             </div>
             

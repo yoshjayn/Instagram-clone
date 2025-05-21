@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { instance } from "../../services/Api";
+import React, { useState } from "react";
 
-const Login = () => {
+const LoginOld = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate();
-  // Add this useEffect to check for token and redirect
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     navigate('/');
-  //   }
-  // }, [navigate]);
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -27,40 +17,23 @@ const Login = () => {
       return;
     }
 
-    try {
-
-      const response = await instance.post('/auth/login', {
-        email,
-        password
-      });
-
-      // Store the token in localStorage
-      localStorage.setItem('token', response.data.data.token);
-      // Store user data in localStorage
-      localStorage.setItem('userData', JSON.stringify(response.data.data));
-      console.log('token value updated in local storage ✅');
-      // Clear form and errors
-      setError("");
-      setEmail("");
-      setPassword("");
-
-      // Navigate to home page
-      navigate('/');
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
-    } finally {
+    setError("");
+    console.log("Logging in with:", { email, password });
+    
+    // Simulate API call
+    setTimeout(() => {
       setIsLoading(false);
-    }
+    }, 1500);
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
       <div className="bg-white p-8 sm:p-10 rounded-lg border border-gray-300 w-full max-w-sm">
         <div className="flex justify-center mb-8">
-          <i
-            data-visualcompletion="css-img"
-            aria-label="Instagram"
-            role="img"
+          <i 
+            data-visualcompletion="css-img" 
+            aria-label="Instagram" 
+            role="img" 
             style={{
               backgroundImage: 'url("https://static.cdninstagram.com/rsrc.php/v4/yB/r/E7m8ZCMOFDS.png")',
               backgroundPosition: '0px -52px',
@@ -73,7 +46,7 @@ const Login = () => {
           ></i>
         </div>
 
-
+        
 
         {error && (
           <div className="mb-4 p-2 text-center text-sm text-white bg-red-500 rounded">
@@ -120,7 +93,7 @@ const Login = () => {
         <div className="text-center">
           <a href="#" className="text-xs text-blue-900 font-medium flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+              <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
             </svg>
             Log in with Facebook
           </a>
@@ -139,10 +112,10 @@ const Login = () => {
         <p className="text-xs text-gray-500">Get the app.</p>
         <div className="flex justify-center space-x-2 mt-2">
           <a href="#">
-            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/180ae7a0bcf7.png" alt="App Store" className="h-10" />
+            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/180ae7a0bcf7.png" alt="App Store" className="h-10"/>
           </a>
           <a href="#">
-            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/e9cd846dc748.png" alt="Google Play" className="h-10" />
+            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/e9cd846dc748.png" alt="Google Play" className="h-10"/>
           </a>
         </div>
       </div>
@@ -150,4 +123,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginOld;
