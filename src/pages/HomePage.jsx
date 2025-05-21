@@ -59,9 +59,11 @@ const getUserData = () => {
   }
 };
 
-const userData = getUserData();
 
 const HomePage = () => {
+  const userData = getUserData();
+
+
   return (
     
     <div className="bg-gray-50 min-h-screen">
