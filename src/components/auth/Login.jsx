@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { instance } from "../../services/Api";
+// import { instance } from "../../services/Api";
+import { authApi } from '../../services/Api'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   // Add this useEffect to check for token and redirect
   // useEffect(() => {
@@ -27,30 +28,56 @@ const Login = () => {
       return;
     }
 
+    // try {
+
+    //   const response = await instance.post('/auth/login', {
+    //     email,
+    //     password
+    //   });
+
+    //   // Store the token in localStorage
+    //   localStorage.setItem('token', response.data.data.token);
+    //   // Store user data in localStorage
+    //   localStorage.setItem('userData', JSON.stringify(response.data.data));
+    //   console.log('token value updated in local storage ✅');
+    //   // Clear form and errors
+    //   setError("");
+    //   setEmail("");
+    //   setPassword("");
+
+    //   // Navigate to home page
+    //   navigate('/');
+    // } catch (err) {
+    //   setError(err.response?.data?.message || "Login failed. Please try again.");
+    // } finally {
+    //   setIsLoading(false);
+    // }
+
     try {
+      const response = await authApi.login({ email, password });
+      
+      console.log('Login response:', response.data.data);
 
-      const response = await instance.post('/auth/login', {
-        email,
-        password
-      });
-
-      // Store the token in localStorage
+      // Store token and userData directly from response.data.data
       localStorage.setItem('token', response.data.data.token);
-      // Store user data in localStorage
       localStorage.setItem('userData', JSON.stringify(response.data.data));
-      console.log('token value updated in local storage ✅');
-      // Clear form and errors
+      setUser(response.data.data);
+    
+      console.log('Token saved to localStorage ✅');
+      //Clear form and errors
       setError("");
       setEmail("");
       setPassword("");
 
       // Navigate to home page
       navigate('/');
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+    } catch (error) {
+      console.error('Login error:', error);
+      setError(error.response?.data?.message || 'Login failed');
     } finally {
       setIsLoading(false);
     }
+    
   };
 
   return (

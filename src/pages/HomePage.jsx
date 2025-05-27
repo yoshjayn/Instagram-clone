@@ -59,29 +59,88 @@ const getUserData = () => {
   }
 };
 
+// Mock data for stories
+const mockStories = [
+  {
+    id: 1,
+    username: 'travel_enthusiast',
+    userImage: 'https://randomuser.me/api/portraits/women/44.jpg',
+    hasStory: true,
+    viewed: false
+  },
+  {
+    id: 2,
+    username: 'foodie_adventures',
+    userImage: 'https://randomuser.me/api/portraits/men/32.jpg',
+    hasStory: true,
+    viewed: true
+  },
+  {
+    id: 3,
+    username: 'photography_pro',
+    userImage: 'https://randomuser.me/api/portraits/women/68.jpg',
+    hasStory: true,
+    viewed: false
+  },
+  {
+    id: 4,
+    username: 'fitness_guru',
+    userImage: 'https://randomuser.me/api/portraits/men/75.jpg',
+    hasStory: true,
+    viewed: false
+  },
+  {
+    id: 5,
+    username: 'art_lover',
+    userImage: 'https://randomuser.me/api/portraits/women/25.jpg',
+    hasStory: true,
+    viewed: true
+  }
+];
 
 const HomePage = () => {
   const userData = getUserData();
 
-
   return (
-    
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
       
       <div className="max-w-screen-lg mx-auto pb-4 px-4 flex">
         {/* Main feed */}
         <div className="w-full md:w-2/3 md:pr-8">
-          {/* Stories (optional) */}
+          {/* Stories */}
           <div className="bg-white border border-gray-200 rounded-lg mb-6 p-4 overflow-x-auto">
             <div className="flex space-x-4">
-              {/* Story circles would go here */}
-              {[1, 2, 3, 4, 5].map((item) => (
-                <div key={item} className="flex flex-col items-center space-y-1">
-                  <div className="w-16 h-16 rounded-full border-2 border-pink-500 p-0.5">
-                    <div className="w-full h-full rounded-full bg-gray-200"></div>
+              {/* Your story */}
+              <div className="flex flex-col items-center space-y-1">
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-full border-2 border-gray-200 p-0.5">
+                    <img
+                      src={userData.profileImage || "https://randomuser.me/api/portraits/lego/1.jpg"}
+                      alt="Your story"
+                      className="w-full h-full rounded-full object-cover"
+                    />
                   </div>
-                  <span className="text-xs">username</span>
+                  <div className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 border-2 border-white">
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
+                </div>
+                <span className="text-xs">Your story</span>
+              </div>
+
+              {/* Other stories */}
+              {mockStories.map((story) => (
+                <div key={story.id} className="flex flex-col items-center space-y-1">
+                  <div className={`w-16 h-16 rounded-full border-2 p-0.5 ${story.viewed ? 'border-gray-300' : 'border-gradient-instagram'}`}>
+                    <img
+                      src={story.userImage}
+                      alt={story.username}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs truncate w-16 text-center">{story.username}</span>
                 </div>
               ))}
             </div>

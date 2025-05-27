@@ -76,7 +76,7 @@ const Navbar = () => {
             <span className="text-base">Create</span>
           </Link>
           
-          <Link to="/login" className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100">
+          <Link to="/profile" className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100">
             <User size={24} />
             <span className="text-base">Profile</span>
           </Link>

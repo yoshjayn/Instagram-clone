@@ -17,6 +17,29 @@ instance.interceptors.request.use((config) => {
     let token = localStorage.getItem('token')
 
     if(token)   config.headers.Authorization = 'Bearer '+ token
-    
+
     return config
 })
+
+// Auth endpoints
+export const authApi = {
+    signup: (userData) => instance.post('/auth/signup', userData),
+    login: (credentials) => instance.post('/auth/login', credentials),
+    logout: () => api.delete('/auth/logout'),
+  }
+  
+  // Post endpoints
+  export const postApi = {
+    getFeed: () => instance.get('/post/feed'),
+    getAllPosts: () => instance.get('/post/all-posts'),
+    createPost: (postData) => instance.post('/post/create', postData),
+    likePost: (postId) => instance.post(`/post/like/${postId}`),
+    unlikePost: (postId) => instance.post(`/post/unlike/${postId}`),
+  }
+
+// User endpoints
+export const userApi = {
+  getProfile: (id) => instance.get(`/user/profile/${id}`),
+  updateProfile: (userData) => instance.put('/user/profile', userData)
+}
+  
