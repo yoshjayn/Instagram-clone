@@ -66,14 +66,7 @@ const Signup = () => {
       
       if (response.data.success) {
         // Store user data and token in localStorage
-        localStorage.setItem('userData', JSON.stringify({
-          name: fullname,
-          // email: emailOrPhone,
-          username: username,
-          // profile_picture: response.data.data.profile_picture,
-          // token: response.data.data.token,
-          // password: password
-        }));
+        localStorage.setItem('userData', JSON.stringify(response.data.data));
         
         // Store the token
         if (response.data.data && response.data.data.token) {
