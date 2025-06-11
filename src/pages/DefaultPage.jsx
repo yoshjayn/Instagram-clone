@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Default from '../components/Default';
+import Default from '../components/auth/Default';
 
 const DefaultPage = () => {
 

@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-[245px] h-screen bg-white border-r border-gray-200 z-50 px-3 py-8">
+    <nav className="hidden lg:block fixed top-0 left-0 w-[245px] h-screen bg-white border-r border-gray-200 z-50 px-3 py-8">
       <div className="flex flex-col h-full">
         {/* Logo */}
         <Link to="/" className="mb-3 pl-3">
@@ -40,7 +40,7 @@ const Navbar = () => {
             <span className="text-base">Home</span>
           </Link>
           
-          <Link to="/search" className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100">
+          {/* <Link to="/search" className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100">
             <Search size={24} />
             <span className="text-base">Search</span>
           </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
           <Link to="/notifications" className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100">
             <Heart size={24} />
             <span className="text-base">Notifications</span>
-          </Link>
+          </Link> */}
           
           <Link to="/create" className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100">
             <PlusSquare size={24} />
@@ -99,7 +99,7 @@ const Navbar = () => {
           {/* Dropdown Menu */}
           {showMoreMenu && (
             <div className="absolute bottom-16 left-0 w-[240px] bg-white rounded-lg shadow-lg border border-gray-200 py-2">
-              <Link to="/settings" className="flex items-center space-x-3 px-4 py-2.5 hover:bg-gray-100">
+              {/* <Link to="/settings" className="flex items-center space-x-3 px-4 py-2.5 hover:bg-gray-100">
                 <Settings size={20} />
                 <span>Settings</span>
               </Link>
@@ -112,7 +112,7 @@ const Navbar = () => {
               <Link to="/saved" className="flex items-center space-x-3 px-4 py-2.5 hover:bg-gray-100">
                 <Bookmark size={20} />
                 <span>Saved</span>
-              </Link>
+              </Link> */}
               
               <button className="flex items-center space-x-3 px-4 py-2.5 hover:bg-gray-100 w-full">
                 <Moon size={20} />

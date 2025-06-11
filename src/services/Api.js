@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 let hardToken = '01fe030b-3bc0-4165-bc6f-0eba7dcedb43'
+console.log('line number 51',import.meta.env.VITE_API_BASE_URL)
 
 export const instance = axios.create({
     baseURL:  import.meta.env.VITE_API_BASE_URL,
@@ -30,9 +31,12 @@ export const authApi = {
   
   // Post endpoints
   export const postApi = {
+    // uploadFile:()=> instance.post('/post/upload'),
+    getMyPosts:()=>instance.get('/post/my-posts'),
     getFeed: () => instance.get('/post/feed'),
     getAllPosts: () => instance.get('/post/all-posts'),
     createPost: (postData) => instance.post('/post/create', postData),
+    deletePost: (postId) => instance.delete(`/post/delete/${postId}`),
     likePost: (postId) => instance.post(`/post/like/${postId}`),
     unlikePost: (postId) => instance.post(`/post/unlike/${postId}`),
   }

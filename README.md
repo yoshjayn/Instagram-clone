@@ -1,3 +1,18 @@
+//delete post/ update(PUT) on PostModal.jsx
+//like(POST) /unlike post on HomePage.jsx
+How to manage posts from multiple users (database connectivity)?
+Remove sample post
+
+
+Do i need to use Context for anything so far?
+
+
+
+userImage edit functionality on Edit Profile and then managing its reference throughout the app
+
+
+
+
 Step 1: Project Setup and Basic Structure
 Step 2: Add Basic Routing and Create Login/Signup Forms
 Step 3: Create Navbar and Basic Home Layout
@@ -53,25 +68,15 @@ The project currently has a solid foundation with the main Instagram features im
 Step 5: Add State Management and Basic API Integration
 
 # DRAFT-2 
-<!-- Use cookies instead of local storage during interceptors --> ah that can only be done if the apis are written by you :)
-
-**Authentication Flow:**
+Authentication Flow:
 * Fixed signup form validation
   - Added validation for all required fields
   - Implemented email/phone format validation
 
-**User Data Management:**
-* Implemented localStorage handling
-  - Added user data storage during signup
-  - Added token storage after successful signup
-  - Added safe getUserData() function with error handling
-
-**Navigation Updates:**
+Navigation Updates:
 * Enhanced Navbar functionality
-  - Added More menu dropdown
-  - **Implemented logout functionality**
-  - Added user profile section
   - Added navigation links for all main features
+  - **Implemented logout functionality**
 
 **HomePage Improvements:**
 * Added user profile display
@@ -88,6 +93,36 @@ API Integration:
 * Enhanced API communication
   - Implemented token-based authentication
 
+# ###################################################################################################   
 
+Step 5: continued (Context creation and Upload functionality)
+
+# DRAFT-3
+
+Key suggestions for implementing post creation:
+
+1. Add a "Create Post" button in the feed header
+2. Create a modal component for post creation
+3. Add state management for posts (useState/Redux)
+4. Implement image upload functionality
+5. Add form for caption input
+6. Create API endpoint for post creation
+7. Update UI after successful post creation
+8. Add loading states and error handling
+
+       
+        
+Features and logic implemented so far:
+
+- Authentication pages: Login and Signup with basic routing
+- Main layout: Responsive Navbar, Sidebar, and HomePage feed
+- Mocked posts and suggestions: Displayed on HomePage
+- Profile page: User profile rendering
+- Create Post:
+  - Dedicated /create route and page for post creation (image upload, caption input)
+  - Navigation to /create via Navbar
+- Routing: All main pages (home, profile, login, signup, create post) are routed using React Router
+- UI/UX: Responsive design, fixed sidebar, and clean layout
+Let me know if you want to add more features or need further cleanup!
 
 

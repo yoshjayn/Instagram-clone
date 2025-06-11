@@ -101,7 +101,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 py-4">
       <div className="bg-white p-8 sm:p-10 rounded-lg border border-gray-300 w-full max-w-sm">
         <div className="flex justify-center mb-8">
           <i

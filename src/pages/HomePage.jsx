@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
 import { Heart, MessageCircle, Send, Bookmark } from 'lucide-react';
+import { postApi } from '../services/Api';
+import { useNavigate} from 'react-router-dom';
+
 
 // Mock data for posts
 const mockPosts = [
@@ -48,17 +51,6 @@ const mockSuggestions = [
   }
 ];
 
-// Replace the direct localStorage.getItem with parsed version
-const getUserData = () => {
-  try {
-    const data = localStorage.getItem('userData');
-    return data ? JSON.parse(data) : {};
-  } catch (error) {
-    console.error('Error parsing user data:', error);
-    return {};
-  }
-};
-
 // Mock data for stories
 const mockStories = [
   {
@@ -98,16 +90,55 @@ const mockStories = [
   }
 ];
 
-const HomePage = () => {
-  const userData = getUserData();
+// Replace the direct localStorage.getItem with parsed version
+const getUserData = () => {
+  try {
+    const data = localStorage.getItem('userData');
+    return data ? JSON.parse(data) : {};
+  } catch (error) {
+    console.error('Error parsing user data:', error);
+    return {};
+  }
+};
 
+const HomePage = () => {
+  const [allPosts, setAllPosts] = useState([]);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    let token = localStorage.getItem('token')
+    console.log(token)
+    if(!token) {
+      console.log('token')
+      navigate('/signup')
+    }
+    fetchAllPosts();
+  }, []);
+  const fetchAllPosts = async () => {
+    try {
+      const response = await postApi.getFeed();
+      if (response.data.success) {
+        setAllPosts(response.data.data);
+        console.log('line 24', response.data.data)
+        // console.log('postsArray',posts)
+      }
+    } catch (err) {
+      console.error('Failed to fetch posts:', err);
+    }
+  };
+  const handleLikes = () => {
+    // Logic to handle likes
+  };
+
+  const userData = getUserData();
+  const imgSrc="https://randomuser.me/api/portraits/women/44.jpg"
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      
-      <div className="max-w-screen-lg mx-auto pb-4 px-4 flex">
+      <div className="flex justify-center max-w-screen-lg mx-auto pb-4">
         {/* Main feed */}
-        <div className="w-full md:w-2/3 md:pr-8">
+        <div className="w-2/3 xl:w-2/3 xl:pr-8 xl:ml-10">
           {/* Stories */}
           <div className="bg-white border border-gray-200 rounded-lg mb-6 p-4 overflow-x-auto">
             <div className="flex space-x-4">
@@ -146,26 +177,93 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Posts */}
+          {/*Created posts */}
+
+          {allPosts && allPosts.length > 0 ? (
+            allPosts.map((post) => (
+              // console.log('post caption',post.text) ,
+              <div key={post._id} className="bg-white border border-gray-200 rounded-lg mb-6">
+                {/* Post header */}
+                <div className="flex items-center p-3 border-b border-gray-200">
+                  <img
+                    src={imgSrc}
+                    alt={userData.name || "your_username"}
+                    className="w-8 h-8 rounded-full object-cover mr-3"
+                  />
+                  <span className="font-semibold text-sm">{userData.name || "your_username"}</span>
+                </div>
+
+                {/* Post image */}
+                <img
+                  src={post.image || 'https://via.placeholder.com/300'}
+                  alt={post.text || 'Post'}
+                  className="w-full h-full object-cover"
+                />
+                {/* <p className='text-black-800'>{post.text || 'Caption'}</p> */}
+                {/* Post actions */}
+                <div className="p-3">
+                  <div className="flex space-x-4 mb-2">
+                    <Heart className="text-gray-800" size={24} onClick={handleLikes}/>
+                    <MessageCircle className="text-gray-800" size={24} />
+                    <Send className="text-gray-800" size={24} />
+                    <Bookmark className="ml-auto text-gray-800" size={24} />
+                  </div>
+
+                  {/* Likes */}
+                  <p className="font-semibold text-sm mb-1">{post.likes} likes</p>
+
+                  {/* Caption */}
+                  <p className="text-sm mb-1">
+                    <span className="font-semibold mr-1">{userData.name}</span>
+                    {post.text}
+                  </p>
+
+                  {/* Comments */}
+                  <button className="text-gray-500 text-sm mb-1">
+                    View all {post.comments} comments
+                  </button>
+
+                  {/* Timestamp */}
+                  <p className="text-gray-400 text-xs uppercase">{post.timestamp}</p>
+                </div>
+
+                {/* Add comment */}
+                <div className="border-t border-gray-200 p-3 flex">
+                  <input
+                    type="text"
+                    placeholder="Add a comment..."
+                    className="flex-1 text-sm focus:outline-none"
+                  />
+                  <button className="text-blue-500 font-semibold text-sm">Post</button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-3 text-center text-gray-400">No posts yet.</div>
+          )}
+
+
+          {/*existing posts */}
+
           {mockPosts.map((post) => (
             <div key={post.id} className="bg-white border border-gray-200 rounded-lg mb-6">
               {/* Post header */}
               <div className="flex items-center p-3 border-b border-gray-200">
-                <img 
-                  src={post.userImage} 
+                <img
+                  src={post.userImage}
                   alt={post.username}
                   className="w-8 h-8 rounded-full object-cover mr-3"
                 />
                 <span className="font-semibold text-sm">{post.username}</span>
               </div>
-              
+
               {/* Post image */}
-              <img 
-                src={post.image} 
+              <img
+                src={post.image}
                 alt={post.caption}
                 className="w-full object-cover"
               />
-              
+
               {/* Post actions */}
               <div className="p-3">
                 <div className="flex space-x-4 mb-2">
@@ -174,25 +272,25 @@ const HomePage = () => {
                   <Send className="text-gray-800" size={24} />
                   <Bookmark className="ml-auto text-gray-800" size={24} />
                 </div>
-                
+
                 {/* Likes */}
                 <p className="font-semibold text-sm mb-1">{post.likes} likes</p>
-                
+
                 {/* Caption */}
                 <p className="text-sm mb-1">
                   <span className="font-semibold mr-1">{post.username}</span>
                   {post.caption}
                 </p>
-                
+
                 {/* Comments */}
                 <button className="text-gray-500 text-sm mb-1">
                   View all {post.comments} comments
                 </button>
-                
+
                 {/* Timestamp */}
                 <p className="text-gray-400 text-xs uppercase">{post.timestamp}</p>
               </div>
-              
+
               {/* Add comment */}
               <div className="border-t border-gray-200 p-3 flex">
                 <input
@@ -204,15 +302,15 @@ const HomePage = () => {
               </div>
             </div>
           ))}
+
         </div>
-        
         {/* Sidebar - hidden on mobile */}
-        <div className="hidden md:block md:w-1/3">
+        <div className="hidden xl:block xl:w-1/3">
           <div className="fixed w-80 pt-4">
             {/* User profile */}
             <div className="flex items-center mb-6">
-              <img 
-                src="https://randomuser.me/api/portraits/women/44.jpg" 
+              <img
+                src={imgSrc}
                 alt="Current user"
                 className="w-14 h-14 rounded-full object-cover mr-4"
               />
@@ -221,19 +319,19 @@ const HomePage = () => {
                 <p className="text-gray-400 text-sm">{userData.email || "Your Name"}</p>
               </div>
             </div>
-            
+
             {/* Suggestions */}
             <div className="mb-4">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-gray-500 font-semibold text-sm">Suggestions For You</span>
                 <button className="text-xs font-semibold">See All</button>
               </div>
-              
+
               {mockSuggestions.map((user) => (
                 <div key={user.id} className="flex items-center justify-between mb-3">
                   <div className="flex items-center">
-                    <img 
-                      src={user.avatar} 
+                    <img
+                      src={user.avatar}
                       alt={user.username}
                       className="w-8 h-8 rounded-full object-cover mr-3"
                     />
@@ -246,7 +344,7 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
-            
+
             {/* Footer links */}
             <div className="text-xs text-gray-400">
               <div className="mb-4">
