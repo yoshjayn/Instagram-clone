@@ -278,8 +278,8 @@ const HomePage = () => {
 
                 {/* Caption */}
                 <p className="text-sm mb-1">
-                  <span className="font-semibold mr-1">{post.username}</span>
-                  {post.caption}
+                  <span className="font-semibold mr-1">{userData.name}</span>
+                  {typeof post.text === 'object' ? post.text.name : post.text}
                 </p>
 
                 {/* Comments */}
