@@ -6,6 +6,7 @@ import SignupPage from './pages/SignupPage'
 import DefaultPage from './pages/DefaultPage'
 import ProfilePage from './pages/ProfilePage'
 import CreatePostPage from './components/post/CreatePostPage';
+import ChatPage from './pages/ChatPage'
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/create" element={<CreatePostPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+
       </Routes>
     </Router>
   )
